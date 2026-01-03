@@ -28,18 +28,52 @@ plt.ylabel('Temp [deg C]')
 plt.xlabel('day of year')
 plt.title('Temprature readings for 2012')
 plt.show()
-print('\n')
+print('see own plot \n')
 
 # Part 3
 # Lag en funksjon som beregner tempratur gjennom året med gitt formel
 # Plot funksjonen sammen med målte tempraturer
 print('PART 3:')
-import math
+import numpy as np
 
-def year_temp(days):
-    T_avg = 10
-    A = 20
-    offset = 0
-    omega = 2 * math.pi / 365
+def year_temp(days,T_avg=10, A=20, offset=0):
+    omega = 2 * np.pi / 365
 
-    return T_avg + A * math.sin(omega * (days + offset))
+    return T_avg + A * np.sin(omega * (days + offset))
+
+one_year = np.arange(1,366)
+
+fig, ax = plt.subplots()
+ax.plot(year_temp(one_year), label='T0 + A * sin(omega * (day + offset))', color='orange')
+ax.plot(temp_avg_numpy, label='Daily average meassurement', color='blue')
+ax.legend(loc='upper right')
+ax.set_xlabel('day of year')
+ax.set_ylabel('Temp [deg C]')
+ax.set_title('Temperature reading for 2012')
+
+plt.show()
+print('see own plot \n')
+
+# Part 4
+# Ved å endre på  Tavg og offset og plotte igjen kan du få kurvene til å sammenfalle ganske bra med faktis T_avg
+# Hva er estimert årsgjennomsnitt T_avg for 2012?
+# Hva er estimert amplitude for temretursvingningen?
+
+print('Part 4:')
+print('see own plot')
+
+print(f'{temp_avg.mean():.2f}')
+# I see from this print stament that approximatley 5.91 celcius is mean for 2012
+# Also see form plot that A is approcaimatley 20
+fig, ax = plt.subplots()
+ax.plot(year_temp(one_year, T_avg=5.91,A=10,offset=-109), label='T0 + A * sin(omega * (day + offset))', color='orange')
+ax.plot(temp_avg_numpy, label='Daily average meassurement', color='blue')
+ax.legend(loc='lower center')
+ax.set_xlabel('day of year')
+ax.set_ylabel('Temp [deg C]')
+ax.set_title('Temperature reading for 2012')
+
+plt.show()
+
+print('Estimated average for 2012 is 5.91 degrees celcius \n' \
+'and estimated amplitude is 10')
